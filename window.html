@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			
+			#box{
+				margin:0;
+				padding:0;
+				text-align:center;
+				}
+			#window{
+				width:500px;
+				height:300px;
+				background:white;
+				border:1px solid black;
+				position:relative;
+				text-align:center;
+				display:none;
+				}
+			
+			#text{
+				width:300px;
+				height:150px;
+				border:1px solid black;
+				margin:90px 100px 0 100px;
+			}
+			#top{
+				text-align:center;
+				height:30px;
+				width:500px;
+				background:blue;
+				line-height:30px;
+				margin:0;
+				position:absolute;
+				padding:0;
+				cursor:pointer;
+			}	
+			#close{
+				float:right;
+				}
+			p{
+				margin:0;
+				padding:0;
+				display:block;
+				font-size:20px;
+				}
+			input:hover{
+				cursor:pointer;
+				background:yellow;
+
+				}
+			input{
+				border-radius:6px;
+				}
+		</style>
+
+		<script type="text/javascript">
+			window.onload = function (){
+				var windows=document.getElementById("window");
+				var top=document.getElementById("top");
+				var close=document.getElementById("close");
+				var buto=document.getElementsByTagName("input");
+				var word=document.getElementById("word");
+				var text=document.getElementById("text");
+				var del=document.getElementById("del");
+				var enter=document.getElementById("enter");
+
+				windows.style.left="100px";
+				windows.style.top="100px";
+
+				//按下发布按键，弹出窗口——发布按钮;
+				buto[0].onclick=function(){
+					
+					windows.style.display = "block";
+				}
+				//取消发布并关闭窗口——取消按钮;
+				del.onclick=function(){
+					dele();
+				}
+				//按下确认按钮发送文本并关闭窗口——确认按钮;
+				enter.onclick=function(){
+					send();
+				}
+				//ctrl+enter组合键发送文本并关闭窗口;
+				window.onkeydown=function(evt){
+					var evts=evt||event;
+					if(evts.ctrlKey&&evts.keyCode == 13){
+						send();
+					}
+				}
+				//移动窗口，并有关闭按钮;
+				top.onmousedown = function (evt){
+					var _evts = evt || event;
+					
+					document.onmousemove = function (evt){
+						var evts = evt || event;
+						windows.style.left = evts.clientX - _evts.offsetX + "px";
+						windows.style.top = evts.clientY - _evts.offsetY-50 + "px";
+					}
+					
+					document.onmouseup = function (){
+						document.onmousemove = null;
+						document.onmouseup = null;
+					}
+					//关闭窗口按钮;
+					close.onclick = function(){
+						dele();
+					}
+				}				
+				//发布输入框内容，关闭窗口并清窗口内文本内容;
+				function send(){
+					var reg=/^\w{1,150}$/;
+					var words=text.value;
+					//判断输入内容长度，超过150字弹出警告;
+					if(reg.test(words)==true){
+						word.innerHTML+=text.value+"<br/>";
+						windows.style.display = "none";
+						text.value="";
+					}else {
+						alert("请重新输入");
+					}
+				}
+				//清除文本内容，关闭窗口;
+				function dele(){
+					text.value="";
+					windows.style.display = "none";
+				}
+			}
+		</script>	
+	</head>
+	<body>
+		<div id="box">
+			<input type="button" value="发布"/>
+			<p>这是第一条微博</p>
+			<p id="word"></p>
+			<div id="window">
+					<div id="top">发布微博<input type="button" value="关闭" id="close"/></div>
+					<textarea id="text"></textarea>
+					<input type="button" value="确定" id="enter"/>
+					<input type="button" value="取消" id="del"/>
+				</div>
+		</div>
+	</body>
+</html>

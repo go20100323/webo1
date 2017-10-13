@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src=" js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			window.onload=function(){
+				var but=input();
+				var hi=active();
+				var color=box();
+				but.onclick=function(){
+					color.style.background="yellow";
+					hi.style.background="red";
+				}
+				
+			}
+		</script>
+		<style>
+			body{margin:0;padding:0;}
+			#box{width:200px;height:100px;background:red;}
+			.active{width:50px;height:50px;background:white;}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<input type="button"	value="点这里"/>
+			
+			<div class="active">
+
+			</div>
+		</div>
+	</body>
+</html>
